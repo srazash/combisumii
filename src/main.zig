@@ -1,11 +1,11 @@
 const std = @import("std");
+const rand = std.rand;
 
-pub fn main() anyerror!void {
-    // Note that info level log messages are by default printed only in Debug
-    // and ReleaseSafe build modes.
-    std.log.info("All your codebase are belong to us.", .{});
+pub fn main() !void {
+    const stdout = std.io.getStdOut().writer();
+    try stdout.print("RNG: {d}\n", .{rng()});
 }
 
-test "basic test" {
-    try std.testing.expectEqual(10, 3 + 7);
+fn rng() !i32 {
+    try return rand.Random.int(1...100);
 }
