@@ -1,5 +1,4 @@
 const std = @import("std");
-const rand = std.rand;
 
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
@@ -7,5 +6,12 @@ pub fn main() !void {
 }
 
 fn rng() !i32 {
-    try return rand.Random.int(1...100);
+    var prng = std.rand.DefaultPrng.init(blk: {
+        var seed: u64 = undefined;
+        try std.os.getrandom(std.mem.asBytes(&seed));
+        break :blk seed;
+    });
+    const rand = prng.random();
+    
+    try return rand.int(u8);
 }
