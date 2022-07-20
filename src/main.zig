@@ -2,13 +2,15 @@ const std = @import("std");
 
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
-    while (true) {
-        try stdout.print("RNG: {d}\n", .{rng(1, 100)});
+    var counter: u8 = 0;
+    var limit: u8 = try rng(1, 255);
+    while (counter < limit) : (counter += 1)  {
+        try stdout.print("PseudoRNG {d}/{d}: {d}\n", .{counter+1, limit, rng(1, 100)});
     }
 }
 
 fn rng(lower: u8, upper: u8) !u8 {
-    // note: the lower and upper values are inclusive
+    // note: both the lower and upper values are inclusive
     var prng = std.rand.DefaultPrng.init(blk: {
         var seed: u64 = undefined;
         try std.os.getrandom(std.mem.asBytes(&seed));
