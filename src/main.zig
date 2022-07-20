@@ -2,10 +2,10 @@ const std = @import("std");
 
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
-    var counter: u8 = 0;
+    var counter: u8 = 1;
     var limit: u8 = try rng(1, 255);
-    while (counter < limit) : (counter += 1)  {
-        try stdout.print("PseudoRNG {d}/{d}: {d}\n", .{counter+1, limit, rng(1, 100)});
+    while (counter <= limit) : (counter += 1)  {
+        try stdout.print("PseudoRNG {d}/{d}: {d}\n", .{counter, limit, rng(1, 100)});
     }
 }
 
