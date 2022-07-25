@@ -3,13 +3,12 @@ const std = @import("std");
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
 
-    // all of this is likely incorrect!
     const array = std.ArrayList;
-    const alloc = std.mem.Allocator;
-    // also incorrect, probably!
-    var candidates = array(u8).init(alloc.alloc(u8));
+    const alloc = std.heap.page_allocator;
     
-    try stdout.print("Array length: {d}\n", .{candidates.len});
+    var candidates = array(u8).init(alloc);
+    
+    try stdout.print("Array length: {d}\n", .{candidates.capacity});
 
     var counter: u8 = 1;
     var limit: u8 = try rng(1, 255);
