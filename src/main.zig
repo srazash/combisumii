@@ -8,13 +8,24 @@ pub fn main() !void {
     
     var candidates = array(u8).init(alloc);
     
-    try stdout.print("Array length: {d}\n", .{candidates.capacity});
-
-    var counter: u8 = 1;
-    var limit: u8 = try rng(1, 255);
-    while (counter <= limit) : (counter += 1)  {
-        try stdout.print("PseudoRNG {d}/{d}: {d}\n", .{counter, limit, rng(1, 100)});
+    var arraylen: u8 = 1;
+    while (arraylen <= try rng(1,100)) : (arraylen += 1) {
+        try candidates.append(try rng(1,50));
     }
+
+    try stdout.print("# of candidates: {d}\n", .{candidates.items.len});
+    try stdout.print("Candidates: {d}\n", .{candidates.items});
+
+    var target: u8 = try rng(1,30);
+
+    try stdout.print("Target: {d}\n", .{target});
+
+    // TEST CODE COMMENTED OUT :)
+    // var counter: u8 = 1;
+    // var limit: u8 = try rng(1, 255);
+    // while (counter <= limit) : (counter += 1)  {
+    //     try stdout.print("PseudoRNG {d}/{d}: {d}\n", .{counter, limit, rng(1, 100)});
+    // }
 }
 
 fn rng(lower: u8, upper: u8) !u8 {
