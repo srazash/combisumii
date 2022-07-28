@@ -4,7 +4,7 @@ pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
 
     const array = std.ArrayList;
-    const alloc = std.heap.page_allocator;
+    const alloc = std.heap.page_allocator; // CHANGE ME TO AN *ARENA* ALLOCATOR!
     
     var candidates = array(u8).init(alloc);
     
