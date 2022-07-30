@@ -4,7 +4,7 @@ pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
 
     const array = std.ArrayList;
-    const alloc = std.heap.page_allocator; // CHANGE ME TO AN *ARENA* ALLOCATOR!
+    const alloc = std.heap.page_allocator;
     
     var candidates = array(u8).init(alloc);
     
@@ -16,7 +16,8 @@ pub fn main() !void {
     try stdout.print("# of candidates: {d}\n", .{candidates.items.len});
     try stdout.print("Candidates: {d}\n", .{candidates.items});
 
-    var target: u8 = try rng(1,30);
+    const target: u8 = 30; // chnaged target to const
+    //var target: u8 = try rng(1,30);
 
     try stdout.print("Target: {d}\n", .{target});
 
