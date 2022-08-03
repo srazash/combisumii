@@ -13,15 +13,15 @@ pub fn main() !void {
     var target: u8 = 0;
     //try stdout.print("\n\n", .{}); // generates error --- why?
 
-    const maybe_input = try stdin.readUntilDelimiterOrEofAlloc(alloc, '\n', 64);
+    const maybe_input = try stdin.readUntilDelimiterOrEofAlloc(alloc, '\n', 2);
     if (maybe_input) |input| {
         defer alloc.free(input);
         _ = input; // use input
-        target = @intCast(u8, input[0]);
+        //target = @intCast(u8, input[0]);
     }
 
     
-    try stdout.print("{d}", .{target});
+    try stdout.print("{s}{s}", .{input[0], input[1]});
 
     var arraylen: u8 = 1;
     while (arraylen <= try rng(1, 100)) : (arraylen += 1) {
