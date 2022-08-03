@@ -2,7 +2,7 @@ const std = @import("std");
 
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
-    const stdin = std.io.Reader;
+    const stdin = std.io.getStdIn().reader();
 
     const array = std.ArrayList;
     const alloc = std.heap.page_allocator;
@@ -10,8 +10,18 @@ pub fn main() !void {
     var candidates = array(u8).init(alloc);
 
     try stdout.print("What is the target? :", .{});
-    var target: u8 = try stdin.read();
-    try stdout.print("\n\n", .{}); // generates error --- why?
+    var target: u8 = 0;
+    //try stdout.print("\n\n", .{}); // generates error --- why?
+
+    const maybe_input = try stdin.readUntilDelimiterOrEofAlloc(alloc, '\n', 64);
+    if (maybe_input) |input| {
+        defer alloc.free(input);
+        _ = input; // use input
+        target = @intCast(u8, input[0]);
+    }
+
+    
+    try stdout.print("{d}", .{target});
 
     var arraylen: u8 = 1;
     while (arraylen <= try rng(1, 100)) : (arraylen += 1) {
